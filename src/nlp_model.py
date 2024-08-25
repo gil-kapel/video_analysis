@@ -1,25 +1,21 @@
 import openai
 
-openai.api_key = input('Insert your OpenAI API key:\n')
+# openai.api_key = input('Insert your OpenAI API key:\n')
 
-def get_gpt_answer(context, question):
+def get_gpt_answer(context, question, agent_character:str = 'helpful assistant'):
     try:
         messages = [
-            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "system", "content": f"You are {agent_character}."},
             {"role": "user", "content": f"Context: {context}"},
             {"role": "user", "content": f"Question: {question}"}
         ]
-
-        # Make the API request to OpenAI
         response = openai.ChatCompletion.create(
-            model= "gpt-3.5-turbo",  # Use the latest model available
+            model= "gpt-3.5-turbo",
             messages=messages,
-            max_tokens=150,         # Adjust token length as required
-            temperature=0.7,        # Control the creativity of the response
-            n=1                     # Return one response
+            max_tokens=150,
+            temperature=0.7,
+            n=1
         )
-
-        # Extract the generated answer from the response
         answer = response.choices[0].message['content'].strip()
         return answer
 
