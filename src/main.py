@@ -3,6 +3,8 @@ from pytubefix import YouTube
 from langdetect import detect_langs
 from pydub import AudioSegment
 import langcodes
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
 from nlp_model import get_gpt_answer
 from translator import oz_translator
 
@@ -15,6 +17,7 @@ from huggingsound import SpeechRecognitionModel
 
 
 def download_youtube_audio(url):
+    out_file = None
     try:
         yt = YouTube(url)
         video = yt.streams.filter(only_audio=True).first()
@@ -22,60 +25,74 @@ def download_youtube_audio(url):
             raise Exception("No audio streams available for this video.")
         out_file = video.download(output_path=".")
         base, ext = os.path.splitext(out_file)
+
         audio = AudioSegment.from_file(out_file)
         os.remove(out_file)
 
         new_file = base + '.wav'
         audio.export(new_file, format="wav")
-        language = detect_langs(yt.title)
-        return new_file, language[0].lang
+        language = detect_langs(yt.title) ##to improve later
+
+        metadata = {'language_code': language[0].lang,
+                    'captions': yt.captions,
+                    'description': yt.description}
+        return new_file, metadata
     except Exception as e:
         print(f"An error occurred: {e}")
         return None, None
 
 
-def transcribe_audio(file_path, language_code):
+def transcribe_audio(file_path, language_code, model=None) -> (dict, dict):
     """
     Transcribes a .wav audio file into text using a SpeechRecognitionModel model from Hugging Face.
-    Args:
-        file_path (str): Path to the .wav audio file.
-        language_code (str): Language code (e.g., 'en' for English, 'fr' for French).
-    Returns:
-        str: The transcribed text.
+    :param: file_path (str): Path to the .wav audio file.
+    :param: language_code (str): Language code (e.g., 'en' for English, 'fr' for French).
+    :param: model (SpeechRecognitionModel): hugging face model that was pre-downloaded
+    :return: str: The transcribed text.
     """
     full_lang = langcodes.Language.get(language_code).display_name().lower()
-    print(f"Using device: {device}")
-    try:
-        model = SpeechRecognitionModel(f"jonatasgrosman/wav2vec2-large-xlsr-53-{full_lang}", device=device)
+    print(full_lang)
+    if model is None:
+        try:
+            model = SpeechRecognitionModel(model_path=f"jonatasgrosman/wav2vec2-large-xlsr-53-{full_lang}",
+                                           device=device) # elgeish/imvladikon
+            transcriptions = model.transcribe([file_path])
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            transcriptions = [None]
+    else:
         transcriptions = model.transcribe([file_path])
-    except Exception as e:
-        os.remove(file_path)
-        return None
-    return transcriptions[0]
+    os.remove(file_path)
+    return transcriptions[0], {language_code: model}
 
 
 def main():
-    youtube_url = input("Enter YouTube URL: ")
-    # youtube_url = "https://www.youtube.com/watch?v=WdOPb8YvxZg"
-
-    audio_file, lang_code = download_youtube_audio(youtube_url)
-    if audio_file is None:
-        print("Failed to download audio. Exiting.")
-
-    print("Audio downloaded. Transcribing...")
-    text = transcribe_audio(audio_file, language_code=lang_code)
-    if text:
-        os.remove(audio_file)
-    else:
-        print('Failed to transcribe audio')
-        return
-    en_text = oz_translator(text['transcription'], lang_code)
+    model_dict = {}
     while True:
-        question = input("ask a question: \n")
-        answer = get_gpt_answer(en_text, question)
-        print(f'{question}:: {answer}')
-        if input('To exit, type x: ').lower() == 'x':
+        youtube_url = input("Enter YouTube URL (lower 'x' to exit): \n")
+        if youtube_url == 'x':
             break
+        # youtube_url = "https://www.youtube.com/watch?v=WdOPb8YvxZg"
+        audio_file, metadata = download_youtube_audio(youtube_url)
+        if audio_file is None:
+            print("Failed to download audio. Exiting.")
+
+        print("Audio downloaded. Transcribing...")
+        lang_code = metadata.get('language_code')
+        text, tmp_dict = transcribe_audio(audio_file, language_code=lang_code, model=model_dict.get(lang_code, None))
+        model_dict.update(tmp_dict)
+        if text:
+            os.remove(audio_file)
+        else:
+            print('Failed to transcribe audio')
+            return
+        en_text = oz_translator(text.get('transcription', ''), metadata.get('language_code'))
+        while True:
+            question = input("ask a question: \n")
+            answer = get_gpt_answer(en_text, question, 'an Academic researcher')
+            print(f'{question}:: {answer}')
+            if input('To exit, type x: \n').lower() == 'x':
+                break
 
 
 if __name__ == "__main__":
