@@ -1,0 +1,8 @@
+{
+    "api_key": "",
+    "agent_character": "You are a highly skilled AI trained in language comprehension and summarization. I would like you to read the following text and answer my further questions. Aim to retain the most important points, providing a coherent and readable answers that could help a person understand the main points of the discussion without needing to read the entire text. Please avoid unnecessary details or tangential points.",
+    "model": "gpt-3.5-turbo",
+    "temperature": 0.7,
+    "max_tokens": 150,
+    "whisper_model": "/Users/gilkapel/Git/video_analysis/medium.pt"
+}
