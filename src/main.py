@@ -8,7 +8,7 @@ def main():
     model_dict = get_initial_asr_models()
     while True:
         youtube_url = input("Enter YouTube URL (lower 'x' to exit): \n")
-        if youtube_url == 'x':
+        if youtube_url.replace(" ", "").lower() == 'x':
             break
         # youtube_url = "https://www.youtube.com/watch?v=WdOPb8YvxZg"
         video, metadata = download_youtube_video(youtube_url)
@@ -21,7 +21,7 @@ def main():
             question = input("ask a question: \n")
             answer = get_gpt_answer(audio_transcription, question)
             print(f'{question}:: {answer}')
-            if input('To exit, type x: \nelse, any key').lower() == 'x':
+            if input('To exit, type x: \nelse, type any key\n').lower().replace(" ", "") == 'x':
                 break
 
 

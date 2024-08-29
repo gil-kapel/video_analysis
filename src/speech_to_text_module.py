@@ -52,5 +52,5 @@ def get_audio_transcription(metadata, model_dict, video):
     lang_code = metadata.get('language_code')
     text, tmp_dict = transcribe_audio(audio_path, language_code=lang_code, model=model_dict.get(lang_code, None))
     model_dict.update(tmp_dict)
-    en_text = translator(text=text, src=metadata.get('language_code'))
+    en_text = translator(text=text) if lang_code != 'en' else text
     return en_text

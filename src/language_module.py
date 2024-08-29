@@ -14,7 +14,7 @@ def get_gpt_answer(context, question):
             {"role": "user", "content": f"Question: {question}"}
         ]
         response = openai.ChatCompletion.create(
-            model= config.get('model'),
+            model= config.get('llm_model'),
             messages=messages,
             max_tokens=config.get('max_tokens'),
             temperature=config.get('temperature'),

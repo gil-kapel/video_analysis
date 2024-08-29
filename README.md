@@ -60,6 +60,10 @@ Ensure you have Python 3.9 installed. The required Python packages are listed in
 
    After downloading, place the models in the `models/` directory within the `src` folder.
 
+5. **Update config.json file:**
+   - Update your OpenAI API key
+   - Change the agent character as you wish
+
 ## Usage
 
 Once you've set up the environment and downloaded the models, you can run the algorithm to analyze a YouTube video and query it.
