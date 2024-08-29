@@ -53,10 +53,9 @@ Ensure you have Python 3.9 installed. The required Python packages are listed in
 
    This project requires certain models for speech recognition, vision analysis, and LLM querying. Follow the URLs below to download and set up the models:
 
-   - **Speech Recognition Model**: [Download Model](https://example.com/speech-model)
-   - **Vision Analysis Model**: [Download Model](https://example.com/vision-model)
-   - **LLM for Querying**: [Download Model](https://example.com/llm-model)
-
+   - **Speech Recognition Model**: [Download Link](https://openaipublic.azureedge.net/main/whisper/models/345ae4da62f9b3d59415adc60127b97c714f32e89e936602e85993674d08dcb1/medium.pt)
+   - **Vision Analysis Model**:
+   - **LLM for Querying**: 
    After downloading, place the models in the `models/` directory within the `src` folder.
 
 ## Usage
@@ -73,15 +72,6 @@ Once you've set up the environment and downloaded the models, you can run the al
 
    After the analysis is complete, you'll be able to interact with the LLM to ask questions about the movie. Follow the on-screen prompts to enter your queries.
 
-## Model Downloads
-
-The project uses pre-trained models for different aspects of video analysis. Please download the necessary models from the links below and place them in the correct directory:
-
-- **Speech Recognition**: [Download Link](https://openaipublic.azureedge.net/main/whisper/models/345ae4da62f9b3d59415adc60127b97c714f32e89e936602e85993674d08dcb1/medium.pt)
-- **Vision Analysis**:
-- **LLM for Querying**: 
-
-Make sure the models are placed in the `models/` directory within the `src` folder.
 
 ## Folder Structure
 
