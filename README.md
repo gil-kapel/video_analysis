@@ -56,6 +56,8 @@ Ensure you have Python 3.9 installed. The required Python packages are listed in
    - **Speech Recognition Model**: [Download Link](https://openaipublic.azureedge.net/main/whisper/models/345ae4da62f9b3d59415adc60127b97c714f32e89e936602e85993674d08dcb1/medium.pt)
    - **Vision Analysis Model**:
    - **LLM for Querying**: 
+
+
    After downloading, place the models in the `models/` directory within the `src` folder.
 
 ## Usage
