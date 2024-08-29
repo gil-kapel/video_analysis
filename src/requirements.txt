@@ -19,15 +19,12 @@ ffprobe==0.5
 filelock==3.15.4
 frozenlist==1.4.1
 fsspec==2024.6.1
-googletrans==4.0.0rc1
 h11==0.12.0
 h2==3.2.0
 hpack==3.0.0
 hstspreload==2024.8.1
 httpcore==0.13.7
-httpx==1.0.0b0
 huggingface-hub==0.24.6
-huggingsound==0.1.6
 hyperframe==5.2.0
 idna==2.10
 imageio-ffmpeg==0.5.1
@@ -47,7 +44,6 @@ multiprocess==0.70.16
 networkx==3.2.1
 numba==0.60.0
 numpy==2.0.2
-openai==0.27.0
 packaging==24.1
 pandas==2.2.2
 pillow==10.4.0
@@ -74,9 +70,6 @@ soundfile==0.12.1
 sympy==1.13.2
 threadpoolctl==3.5.0
 tokenizers==0.19.1
-torch==2.4.0
-torchaudio==2.4.0
-torchvision==0.19.0
 tqdm==4.66.5
 transformers==4.44.2
 typing_extensions==4.12.2

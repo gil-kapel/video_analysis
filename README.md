@@ -39,6 +39,9 @@ Ensure you have Python 3.9 installed. The required Python packages are listed in
 
    ```bash
    pip install -r requirements.txt
+   pip install googletrans
+   pip install openai==0.27.0
+   pip install torch torchvision torchaudio huggingsound       
    ```
 
    Alternatively, if you're using a virtual environment:
@@ -47,6 +50,9 @@ Ensure you have Python 3.9 installed. The required Python packages are listed in
    python -m venv venv
    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
    pip install -r requirements.txt
+   pip install googletrans
+   pip install openai==0.27.0
+   pip install torch torchvision torchaudio huggingsound 
    ```
 
 4. **Download the necessary models:**
