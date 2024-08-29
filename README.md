@@ -77,9 +77,9 @@ Once you've set up the environment and downloaded the models, you can run the al
 
 The project uses pre-trained models for different aspects of video analysis. Please download the necessary models from the links below and place them in the correct directory:
 
-- **Speech Recognition**: [Download Link](https://example.com/speech-model)
-- **Vision Analysis**: [Download Link](https://example.com/vision-model)
-- **LLM for Querying**: [Download Link](https://example.com/llm-model)
+- **Speech Recognition**: [Download Link](https://openaipublic.azureedge.net/main/whisper/models/345ae4da62f9b3d59415adc60127b97c714f32e89e936602e85993674d08dcb1/medium.pt)
+- **Vision Analysis**:
+- **LLM for Querying**: 
 
 Make sure the models are placed in the `models/` directory within the `src` folder.
 
