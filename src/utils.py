@@ -53,7 +53,7 @@ def extract_frames(video_stream: BytesIO, frame_rate=1, similarity_threshold=0.9
     """
     :param video_stream: video as a byte stream.
     :param frame_rate: frame rate.
-    :param similarity_threshold: a threshold between -1 and 1, 1 represents that the two frames are fully identical
+    :param similarity_threshold: a threshold between -1 and 1 - 1 represents that the two frames are fully identical
     :return: list of frames
     """
     try:
@@ -134,3 +134,10 @@ def translator(text:str, src='auto', dest='en', max_chunk_size=500, delay=1.5) -
             continue
 
     return translated_text.strip()
+
+
+def concatenate_data(audio_transcription, vision_data, metadata):
+    # TODO: add a function that concatenate the transcription, metadata and vision data to one paragraph
+    return (f'Audio transcription:\n{audio_transcription}\n'
+            f'Vision data:\n{vision_data}\n'
+            f'Metadata:\n{metadata}\n')
